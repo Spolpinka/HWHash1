@@ -6,12 +6,20 @@ public class Recipe {
     float summProducts;
     String name;
 
-    public Recipe(String name) {
-        this.name = name;
-        summProducts = 0;
+    public Recipe(String name) throws ExistedRecipeException {
+        for (Recipe r :
+                Main.getRecipes()) {
+            if (r.getName() == name) {
+                throw new ExistedRecipeException("Такой рецепт уже есть!");
+            } else {
+                this.name = name;
+                summProducts = 0;
+            }
+        }
+
     }
 
-    public Recipe(String name, Products... products) {
+    public Recipe(String name, Products... products) throws ExistedRecipeException {
         new Recipe(name);
         for (Products p :
                 products) {
