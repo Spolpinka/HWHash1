@@ -60,7 +60,7 @@ public class Main {
         }
     }
 
-    public static Set<Products> getProducts{
+    public static Set<Products> getProducts (){
         return products;
     }
 }

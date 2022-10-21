@@ -58,7 +58,7 @@ public class Products {
 
     public ArrayList<String> getProductNames() {
         ArrayList<String> names = new ArrayList<>();
-        for (Products p : Main.getProducts) {
+        for (Products p : Main.getProducts()) {
             names.add(p.name);
         }
         return names;
