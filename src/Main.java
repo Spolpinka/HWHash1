@@ -24,7 +24,7 @@ public class Main {
             System.out.println(e);
         }
         try {
-            addProduct("яблочки", 99f, 2.6f);
+            addProduct("яблочки", 199f, 2.6f);
         } catch (ExistedException | NotAllFieldsException e) {
             System.out.println(e);
         }
@@ -58,5 +58,9 @@ public class Main {
         } else {
             System.out.println("Такого в списке нет, так что удалять нечего!");
         }
+    }
+
+    public static Set<Products> getProducts{
+        return products;
     }
 }

@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Objects;
 
@@ -32,8 +33,9 @@ public class Products {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
+        System.out.println(1);
         Products products = (Products) o;
-        return Float.compare(products.price, price) == 0 && Float.compare(products.weight, weight) == 0 && Objects.equals(name, products.name);
+        return name.equals(products.name);
     }
 
     @Override
@@ -52,5 +54,13 @@ public class Products {
                 ", цена - " + price + " за кг., " +
                 ", вес - " + weight + " кг., " +
                 (isBought ? "уже куплен" : "еще не куплен");
+    }
+
+    public ArrayList<String> getProductNames() {
+        ArrayList<String> names = new ArrayList<>();
+        for (Products p : Main.getProducts) {
+            names.add(p.name);
+        }
+        return names;
     }
 }
