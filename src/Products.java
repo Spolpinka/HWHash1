@@ -29,6 +29,18 @@ public class Products {
         System.out.println("Купи " + name);
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public float getPrice() {
+        return price;
+    }
+
+    public float getWeight() {
+        return weight;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

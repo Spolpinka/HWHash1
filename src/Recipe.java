@@ -11,9 +11,32 @@ public class Recipe {
         summProducts = 0;
     }
 
-    public Recipe(Set<Products> products, String name) {
+    public Recipe(String name, Products... products) {
         new Recipe(name);
-        this.products = products;
+        for (Products p :
+                products) {
+            this.products.add(p);
+        }
+        calculateSumm();
+    }
+
+    public void addProduct(Products... products) throws ExistedRecipeException {
+        for (Products product : products) {
+            this.products.add(product);
+        }
+        calculateSumm();
+    }
+
+    public Set<Products> getProducts() {
+        return products;
+    }
+
+    public float getSummProducts() {
+        return summProducts;
+    }
+
+    public String getName() {
+        return name;
     }
 
     @Override
@@ -27,5 +50,13 @@ public class Recipe {
     @Override
     public int hashCode() {
         return Objects.hash(products, summProducts, name);
+    }
+
+    private void calculateSumm() {
+        summProducts = 0;
+        for (Products p :
+                products) {
+            summProducts += p.getPrice() * p.getWeight();
+        }
     }
 }

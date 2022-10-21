@@ -4,6 +4,7 @@ import java.util.TreeSet;
 
 public class Main {
     private static Set<Products> products;
+    private static Set<Recipe> recipes;
 
     public static void main(String[] args) {
         products = new HashSet<>();
@@ -62,5 +63,9 @@ public class Main {
 
     public static Set<Products> getProducts (){
         return products;
+    }
+
+    public static Set<Recipe> getRecipes(){
+        return recipes;
     }
 }
