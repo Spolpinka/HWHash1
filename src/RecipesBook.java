@@ -15,12 +15,12 @@ public class RecipesBook {
     public void addRecipe(Recipe... recipe) throws ExistedRecipeException {
         for (Recipe r :
                 recipe) {
-            if (!isNameExist(r)){
+            if (recipes.add(r) || isNameExist(r)) {
+                throw new ExistedRecipeException("Такой рецепт уже есть!");
+            } else {
                 recipes.add(r);
                 System.out.println("Добавили рецепт, проверяем: ");
                 printRecipes();
-            } else {
-                throw new ExistedRecipeException("Такой рецепт уже есть!");
             }
         }
     }

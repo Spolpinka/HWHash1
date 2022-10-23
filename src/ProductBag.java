@@ -15,13 +15,13 @@ public class ProductBag {
     public void addProduct(Product... product) throws ExistedException {
         for (Product p :
                 product) {
-            if (!isNameExist(p)) {
+            if (products.add(p) || isNameExist(p)) {
+                System.out.println("А вот и нужное исключение");
+                throw new ExistedException("Такой продукт уже есть в списке " + p.getName());
+            } else {
                 products.add(p);
                 System.out.println("Продукт " + p.getName() + " добавлен, проверяем список:");
                 printProducts();
-            } else {
-                System.out.println("А вот и нужное исключение");
-                throw new ExistedException("Такой продукт уже есть в списке " + p.getName());
             }
         }
     }
