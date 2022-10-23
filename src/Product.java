@@ -1,14 +1,15 @@
-import java.util.ArrayList;
-import java.util.HashSet;
+import java.util.Collection;
+import java.util.Iterator;
 import java.util.Objects;
+import java.util.Set;
 
-public class Products {
+public class Product {
     private String name;
     private float price;
     private float weight;
     private boolean isBought;
 
-    public Products(String name, float price, float weight) throws NotAllFieldsException, ExistedException {
+    public Product(String name, float price, float weight) throws NotAllFieldsException, ExistedException {
 
         if (name != null && !name.isEmpty() && !name.isBlank()) {
             this.name = name;
@@ -46,7 +47,7 @@ public class Products {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         System.out.println(1);
-        Products products = (Products) o;
+        Product products = (Product) o;
         return name.equals(products.name);
     }
 
@@ -66,13 +67,5 @@ public class Products {
                 ", цена - " + price + " за кг., " +
                 ", вес - " + weight + " кг., " +
                 (isBought ? "уже куплен" : "еще не куплен");
-    }
-
-    public ArrayList<String> getProductNames() {
-        ArrayList<String> names = new ArrayList<>();
-        for (Products p : Main.getProducts()) {
-            names.add(p.name);
-        }
-        return names;
     }
 }

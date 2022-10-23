@@ -1,46 +1,40 @@
+import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
 public class Recipe {
-    Set<Products> products;
-    float summProducts;
+    Set<Product> products;
+    float recipeCost;
     String name;
 
     public Recipe(String name) throws ExistedRecipeException {
-        for (Recipe r :
-                Main.getRecipes()) {
-            if (r.getName() == name) {
-                throw new ExistedRecipeException("Такой рецепт уже есть!");
-            } else {
                 this.name = name;
-                summProducts = 0;
-            }
-        }
-
+                recipeCost = 0;
     }
 
-    public Recipe(String name, Products... products) throws ExistedRecipeException {
+    public Recipe(String name, Product... product) throws ExistedRecipeException {
         new Recipe(name);
-        for (Products p :
-                products) {
-            this.products.add(p);
+        for (Product p :
+                product) {
+            products.add(p);
         }
         calculateSumm();
     }
 
-    public void addProduct(Products... products) throws ExistedRecipeException {
-        for (Products product : products) {
-            this.products.add(product);
+    public void addProduct(Product... product) throws ExistedRecipeException {
+        products = new HashSet<>();
+        for (Product p : product) {
+            products.add(p);
         }
         calculateSumm();
     }
 
-    public Set<Products> getProducts() {
+    public Set<Product> getProducts() {
         return products;
     }
 
-    public float getSummProducts() {
-        return summProducts;
+    public float getRecipeCost() {
+        return recipeCost;
     }
 
     public String getName() {
@@ -52,19 +46,26 @@ public class Recipe {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Recipe recipe = (Recipe) o;
-        return Float.compare(recipe.summProducts, summProducts) == 0 && Objects.equals(products, recipe.products) && Objects.equals(name, recipe.name);
+        return Float.compare(recipe.recipeCost, recipeCost) == 0 && Objects.equals(products, recipe.products) && Objects.equals(name, recipe.name);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(products, summProducts, name);
+        return Objects.hash(products, recipeCost, name);
     }
 
     private void calculateSumm() {
-        summProducts = 0;
-        for (Products p :
+        recipeCost = 0;
+        for (Product p :
                 products) {
-            summProducts += p.getPrice() * p.getWeight();
+            recipeCost += p.getPrice() * p.getWeight();
         }
+    }
+
+    @Override
+    public String toString() {
+        return "Рецепт - " + name +
+                ", содержит продукты " + products +
+                ", общая стоимость рецепта " + recipeCost;
     }
 }

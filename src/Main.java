@@ -1,93 +1,67 @@
 import java.util.HashSet;
 import java.util.Set;
-import java.util.TreeSet;
 
 public class Main {
-    private static Set<Products> products;
-    private static Set<Recipe> recipes;
-
     public static void main(String[] args) {
-        products = new HashSet<>();
-        Products yablochki = null;
-        Products hren = null;
-        Products sugar = null;
+        //создаем новую сумку с продуктами
+        ProductBag firstBag = new ProductBag();
+        Product yablochki = null;
+        Product hren = null;
+        Product sugar = null;
         //ловим ошибки
         try {
-            yablochki = new Products("яблочки", 99f, 2.6f);
-            products.add(yablochki);
-            hren = new Products("хреновина", 150.1f, 0.5f);
-            products.add(hren);
-            sugar = new Products("сахар", 100, 1);
+            yablochki = new Product("яблочки", 99f, 2.6f);
+            hren = new Product("хреновина", 150.1f, 0.5f);
+            sugar = new Product("сахар", 100, 1);
+            firstBag.addProduct(yablochki, hren, sugar);
         } catch (ExistedException | NotAllFieldsException exception) {
             System.out.println(exception);
         }
         try {
-            addProduct("груши", 250, 2);
+            firstBag.addProduct(new Product("груши", 250, 2));
+            System.out.println("первый раз пробуем продублировать яблоки");
+            firstBag.addProduct(new Product("яблочки", 199f, 2.6f));
         } catch (ExistedException | NotAllFieldsException e) {
             System.out.println(e);
         }
+        System.out.println("добавили груши в список - проверяем список");
+        firstBag.printProducts();
+
+        System.out.println("пробуем добавить вторые яблоки, но c другой ценой и весом!");
         try {
-            addProduct("яблочки", 199f, 2.6f);
+            firstBag.addProduct(new Product("яблочки", 199f, 2.6f));
         } catch (ExistedException | NotAllFieldsException e) {
             System.out.println(e);
         }
+        firstBag.printProducts();
         //яблоков купили
         yablochki.wasBought();
         //хрен удалили
-        deleteProduct(hren);
+        firstBag.deleteProduct(hren);
         //печатаем список
-        for (Products p :
-                products) {
-            System.out.println(p);
-        }
+        System.out.println("список после удаления хреновины");
+        firstBag.printProducts();
+        RecipesBook firstBook = new RecipesBook();
         Recipe tieshinPirozok = null;
         try {
             tieshinPirozok = new Recipe("Пирожок от Тёщеньки");
         } catch (ExistedRecipeException e) {
             System.out.println(e);
         }
+
         try {
             tieshinPirozok.addProduct(yablochki, hren, sugar, sugar);
-
         } catch (ExistedRecipeException e) {
             System.out.println(e);
         }
-        recipes.add(tieshinPirozok);
+
         Recipe secondTieshin = null;
         try {
+            firstBook.addRecipe(tieshinPirozok);
             secondTieshin = new Recipe("Пирожок от Тёщеньки");
-
+            firstBook.addRecipe(secondTieshin);
         } catch (ExistedRecipeException e) {
             System.out.println(e);
         }
-        recipes.add(secondTieshin);
-    }
-
-
-    public static void addProduct(String name, float price, float weight) throws ExistedException, NotAllFieldsException {
-        Products test = new Products(name, price, weight);
-        if (products.contains(test)) {
-            test = null;
-            throw new ExistedException("такая позиция в списке уже есть! " + name);
-        } else {
-            products.add(test);
-        }
-
-    }
-
-    public static void deleteProduct(Products p) {
-        if (products.contains(p)) {
-            products.remove(p);
-        } else {
-            System.out.println("Такого в списке нет, так что удалять нечего!");
-        }
-    }
-
-    public static Set<Products> getProducts (){
-        return products;
-    }
-
-    public static Set<Recipe> getRecipes(){
-        return recipes;
     }
 }
