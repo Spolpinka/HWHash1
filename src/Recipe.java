@@ -1,35 +1,21 @@
-import java.util.HashSet;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 
 public class Recipe {
-    Set<Product> products;
+    HashMap<Product, Integer> products;
     float recipeCost;
     String name;
 
     public Recipe(String name) throws ExistedRecipeException {
-                this.name = name;
-                recipeCost = 0;
+        products = new HashMap<>();
+        this.name = name;
+        recipeCost = 0;
     }
-
-    public Recipe(String name, Product... product) throws ExistedRecipeException {
-        new Recipe(name);
-        for (Product p :
-                product) {
-            products.add(p);
-        }
+    public void addProduct(Product product, int count) throws ExistedRecipeException {
+        products.put(product, count);
         calculateSumm();
     }
 
-    public void addProduct(Product... product) throws ExistedRecipeException {
-        products = new HashSet<>();
-        for (Product p : product) {
-            products.add(p);
-        }
-        calculateSumm();
-    }
-
-    public Set<Product> getProducts() {
+    public HashMap<Product, Integer> getProducts() {
         return products;
     }
 
@@ -56,9 +42,9 @@ public class Recipe {
 
     private void calculateSumm() {
         recipeCost = 0;
-        for (Product p :
-                products) {
-            recipeCost += p.getPrice() * p.getWeight();
+        for (Map.Entry<Product, Integer> entry :
+                products.entrySet()) {
+            recipeCost += entry.getKey().getPrice() * entry.getKey().getWeight()* entry.getValue();
         }
     }
 

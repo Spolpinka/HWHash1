@@ -50,7 +50,9 @@ public class Main {
         }
 
         try {
-            tieshinPirozok.addProduct(yablochki, hren, sugar, sugar);
+            tieshinPirozok.addProduct(yablochki, 3);
+            tieshinPirozok.addProduct(hren, 3);
+            tieshinPirozok.addProduct(sugar, 2);
         } catch (ExistedRecipeException e) {
             System.out.println(e);
         }
